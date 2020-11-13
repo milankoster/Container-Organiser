@@ -12,7 +12,32 @@ namespace ContainerVervoer
             {
                 new Container(1000, ContainerType.VaCo),
                 new Container(1500, ContainerType.VaCo),
-                new Container(2000, ContainerType.VaCo)
+                new Container(2000, ContainerType.VaCo),
+                new Container(1500, ContainerType.Cooled),
+                new Container(1500, ContainerType.Cooled),
+                new Container(1500, ContainerType.Cooled),
+                new Container(1500, ContainerType.Cooled),
+                new Container(1500, ContainerType.Cooled),
+                new Container(1500, ContainerType.Valuable),
+                new Container(1500, ContainerType.Valuable),
+                new Container(1500, ContainerType.Valuable),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                
+
             };
             ContainerCrane.Sort(ship, containers);
             

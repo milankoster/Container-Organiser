@@ -8,17 +8,30 @@ namespace ContainerVervoer
     {
         public static void Sort(Ship ship, List<Container> containers)
         {
+            //TODO container type remove 
             List<Container> valuableCooledContainers = GetAllOfType(containers, ContainerType.VaCo);
             SortContainers(ship, valuableCooledContainers, ContainerType.VaCo);
+            
+            List<Container> cooledContainers = GetAllOfType(containers, ContainerType.Cooled);
+            SortContainers(ship, cooledContainers, ContainerType.Cooled); 
+            
+            List<Container> valuableContainers = GetAllOfType(containers, ContainerType.Valuable);
+            SortContainers(ship, valuableContainers, ContainerType.Valuable);
+            
+            List<Container> normalContainers = GetAllOfType(containers, ContainerType.Normal);
+            SortContainers(ship, normalContainers, ContainerType.Normal);
+            
         }
 
         private static void SortContainers(Ship ship, List<Container> containers, ContainerType type)
         {
+            if (!containers.Any()) return; //ToDo move?
+            
             containers = containers.OrderByDescending(c => c.Weight).ToList();
             Column[] eligiblePlaces = GetEligiblePlaces(ship, containers.First().Type);
             foreach (var container in containers)
             {
-                PlaceContainer(ship, eligiblePlaces, container); //should place the container
+                PlaceContainer(ship, eligiblePlaces, container); 
             }
         }
 

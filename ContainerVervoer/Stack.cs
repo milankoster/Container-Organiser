@@ -41,12 +41,15 @@ namespace ContainerVervoer
 
         public bool HasValuable()
         {
-            return _containers.Any(c => c.Type == ContainerType.Valuable);
+            return _containers.Any(c => c.Type == ContainerType.Valuable) || _containers.Any(c => c.Type == ContainerType.VaCo);
         }
 
         public void Add(Container container)
         {
-            _containers.Add(container);
+            if (HasValuable())
+                _containers.Insert(_containers.Count - 1, container);
+            else 
+                _containers.Add(container);
         }
     }
 }
