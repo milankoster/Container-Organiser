@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ContainerVervoer
@@ -8,7 +6,7 @@ namespace ContainerVervoer
     public class Column
     {
         private readonly Stack[] _stacks;
-        public readonly ReadOnlyCollection<Stack> Stacks;
+        public ReadOnlyCollection<Stack> Stacks { get; }
         public int Weight => _stacks.Sum(x => x.Weight);
         
         public Column(int length)

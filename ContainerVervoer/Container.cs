@@ -1,13 +1,11 @@
-﻿using System.ComponentModel;
-
-namespace ContainerVervoer
+﻿namespace ContainerVervoer
 {
     public class Container
     {
         public int MaxWeight { get; }
         public int MinWeight { get; }
         public int MaxTopWeight { get; }
-        public readonly int Weight;
+        public int Weight { get; }
         public ContainerType Type { get; }
         public Container(int weight, ContainerType type)
         {
