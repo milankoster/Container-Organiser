@@ -6,7 +6,7 @@ namespace ContainerVervoer
 {
     public static class ContainerCrane
     {
-        public static void Sort(Ship ship, List<Container> containers)
+        public static void Sort(Ship ship, List<Container> containers) 
         {
             List<Container> valuableCooledContainers = GetAllOfType(containers, ContainerType.VaCo);
             SortContainers(ship, valuableCooledContainers);
@@ -126,16 +126,16 @@ namespace ContainerVervoer
         private static Column[] GetEligiblePlaces(Ship ship, ContainerType type)
         {
             if (type == ContainerType.Normal)
-                return ship.Columns;
+                return ship.Columns.ToArray();
             if (type == ContainerType.Cooled)
-                return ship.Columns.Select(x => new Column(new[] {x.Stacks.First()})).ToArray();
+                return ship.Columns.Select(x => new Column(new[] {x.StackCollection.First()})).ToArray();
             if (type == ContainerType.VaCo)
-                return ship.Columns.Select(x => new Column(new[] {x.Stacks.First()})).ToArray();
+                return ship.Columns.Select(x => new Column(new[] {x.StackCollection.First()})).ToArray();
             if (type == ContainerType.Valuable && ship.Length == 1)
-                return ship.Columns.Select(x => new Column(new[] {x.Stacks.First()})).ToArray();
+                return ship.Columns.Select(x => new Column(new[] {x.StackCollection.First()})).ToArray();
             if (type == ContainerType.Valuable)
                 return ship.Columns.Select(x => new Column(
-                    new[] {x.Stacks.First(), x.Stacks.Last()})).ToArray();
+                    new[] {x.StackCollection.First(), x.StackCollection.Last()})).ToArray();
 
             throw new ArgumentOutOfRangeException(nameof(type), type, "Container type not configured"); //ToDo Throw proper error : container Type not registered
 

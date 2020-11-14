@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ContainerVervoer
@@ -11,16 +12,17 @@ namespace ContainerVervoer
         public int Width { get; }
         public int Length { get; }
         
-        public readonly Column[] Columns; //TODO Readonly array?
-        
+        private readonly Column[] _columns;
+        public readonly ReadOnlyCollection<Column> Columns;
 
         public Ship(int maxWeight, int width, int length)
         {
             MaxWeight = maxWeight;
             Width = width;
             Length = length;
-            Columns = new Column[width];
+            _columns = new Column[width];
             PopulateShip(width, length);
+            Columns = new ReadOnlyCollection<Column>(_columns);
         }
 
         public override string ToString()
@@ -41,7 +43,7 @@ namespace ContainerVervoer
             int max = Convert.ToInt32(Math.Floor(Width / 2.0));
             for (int i = 0; i < max; i++)
             {
-                weight += Columns[i].Weight;
+                weight += _columns[i].Weight;
             }
             return weight;
         }
@@ -52,7 +54,7 @@ namespace ContainerVervoer
             int min = Convert.ToInt32(Math.Ceiling(Width / 2.0));
             for (int i = min; i < Width; i++)
             {
-                weight += Columns[i].Weight;
+                weight += _columns[i].Weight;
             }
             return weight;
         }
@@ -61,18 +63,18 @@ namespace ContainerVervoer
         {
             for (int i = 0; i < width; i++)
             {
-                Columns[i] = new Column(length);
+                _columns[i] = new Column(length);
             }
         }
 
         private string GetTypesString()
         {
-            return string.Join('/',Columns.Select(x => x.GetTypesString()));
+            return string.Join('/',_columns.Select(x => x.GetTypesString()));
         }
         
         private string GetWeightsString()
         {
-            return string.Join('/',Columns.Select(x => x.GetWeightsString()));
+            return string.Join('/',_columns.Select(x => x.GetWeightsString()));
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ContainerVervoer
 {
-    class Program
+    static class Program
     {
         /*To Do List
          * Read Only Collections
@@ -29,9 +29,6 @@ namespace ContainerVervoer
         
         static void Main(string[] args)
         {
-
-            
-            
             Ship ship = new Ship(100000, 3, 3);
             List<Container> containers = new List<Container>()
             {
@@ -59,8 +56,7 @@ namespace ContainerVervoer
                 new Container(1500, ContainerType.Normal),
                 new Container(1500, ContainerType.Normal),
                 new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
+
                 
 
             };

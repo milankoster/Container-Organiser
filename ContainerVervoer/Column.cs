@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ContainerVervoer
@@ -7,12 +8,14 @@ namespace ContainerVervoer
     public class Column
     {
         public readonly Stack[] Stacks; //ToDo Readonly collection? 
+        public ReadOnlyCollection<Stack> StackCollection;
         public int Weight => Stacks.Sum(x => x.Weight);
         
         public Column(int length)
         {
             Stacks = new Stack[length];
             PopulateColumns(length);
+            StackCollection = new ReadOnlyCollection<Stack>(Stacks);
         }
 
         public Column(Stack[] stacks)
