@@ -53,7 +53,7 @@ namespace ContainerVervoer
                 bestStack = CheckRightSide(ship, eligiblePlaces, container);
             
             if (bestStack == null)
-                throw new NotImplementedException(); //TODO Throw proper error: cannot sort container 
+                throw new NotImplementedException(); //ToDo Throw proper error: cannot sort container 
 
             bestStack.Add(container);
         }
@@ -137,7 +137,7 @@ namespace ContainerVervoer
                 return ship.Columns.Select(x => new Column(
                     new[] {x.Stacks.First(), x.Stacks.Last()})).ToArray();
 
-            throw new ArgumentOutOfRangeException(nameof(type), type, "Container type not configured"); //ToDo proper exception
+            throw new ArgumentOutOfRangeException(nameof(type), type, "Container type not configured"); //ToDo Throw proper error : container Type not registered
 
         }
     }

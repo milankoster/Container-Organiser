@@ -1,34 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ContainerVervoer
 {
     class Program
     {
         /*To Do List
-         * Improve code quality
-         * Work through all TO DOs
-         * Throw Proper Exceptions 
+         * Read Only Collections
+         * 
          * Begin checks
          *     - Size
          *     - Height
-         * Unit Testing
-         * Render in program / auto open browser
+         * 
          * Min / Max weight containers
          * Min / Max weight ship
+         *
+         * Magic Numbers 
+         * 
+         * Throw Proper Exceptions 
+         * 
+         * Unit Testing
+         * 
          * Check requirements
-         * Getters
-         * Magic Number Maxtopweight
-         * Private / public getter setter
-         * Seperate URL generator class?
+         * 
+         * Check Private / public getter setter
          */
         
         
         static void Main(string[] args)
         {
 
-            /*Ship ship = new Ship(100000, 3, 3);
+            
+            
+            Ship ship = new Ship(100000, 3, 3);
             List<Container> containers = new List<Container>()
             {
                 new Container(1000, ContainerType.VaCo),
@@ -61,9 +65,10 @@ namespace ContainerVervoer
 
             };
             ContainerCrane.Sort(ship, containers);
+
+            ShipVisualiser.OpenInChrome(ship);
             
             
-            Console.WriteLine(ship);*/
         }
     }
 }

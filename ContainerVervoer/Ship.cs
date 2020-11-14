@@ -12,9 +12,7 @@ namespace ContainerVervoer
         public int Length { get; }
         
         public readonly Column[] Columns; //TODO Readonly array?
-
-        private const string Url = "https://i872272core.venus.fhict.nl/ContainerVisualizer/index.html?"; //TODO Move
-
+        
 
         public Ship(int maxWeight, int width, int length)
         {
@@ -27,7 +25,7 @@ namespace ContainerVervoer
 
         public override string ToString()
         {
-            return $"{Url}length={Length}&width={Width}&stacks={GetTypesString()}&weights={GetWeightsString()}";
+            return $"length={Length}&width={Width}&stacks={GetTypesString()}&weights={GetWeightsString()}";
         }
 
         public bool IsBalanced()
