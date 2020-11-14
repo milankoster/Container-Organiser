@@ -4,10 +4,10 @@ namespace ContainerVervoer
 {
     public class Container
     {
-        public int MaxWeight { get; set; }
+        public int MaxWeight { get; }
         public int MinWeight { get; }
         public int MaxTopWeight { get; }
-        public int Weight;
+        public readonly int Weight;
         public ContainerType Type { get; }
         public Container(int weight, ContainerType type)
         {

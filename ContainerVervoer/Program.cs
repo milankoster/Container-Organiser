@@ -5,6 +5,24 @@ namespace ContainerVervoer
 {
     class Program
     {
+        /*To Do List
+         * Improve code quality
+         * Work through all TO DOs
+         * Throw Proper Exceptions 
+         * Begin checks
+         *     - Size
+         *     - Height
+         * Unit Testing
+         * Render in program / auto open browser
+         * Min / Max weight containers
+         * Min / Max weight ship
+         * Check requirements
+         * Getters
+         * Magic Number Maxtopweight
+         * Private / public getter setter 
+         */
+        
+        
         static void Main(string[] args)
         {
             Ship ship = new Ship(100000, 3, 3);
