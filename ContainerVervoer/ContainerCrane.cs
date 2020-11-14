@@ -76,8 +76,8 @@ namespace ContainerVervoer
         
         private static Stack CheckMiddleStack(Ship ship, Column[] eligiblePlaces, Container container, Stack bestStack)
         {
-            int middle = Convert.ToInt32(Math.Floor(ship.Width / 2.0));
-            bestStack = CheckForBetterStack(eligiblePlaces, middle, container, bestStack);
+            int index = Convert.ToInt32(Math.Floor(ship.Width / 2.0));
+            bestStack = CheckForBetterStack(eligiblePlaces[index].Stacks, container, bestStack);
             return bestStack;
         }
         
@@ -87,7 +87,7 @@ namespace ContainerVervoer
             int minimum = Convert.ToInt32(Math.Ceiling(ship.Width / 2.0));
             for (int i = minimum; i < ship.Width; i++)
             {
-                bestStack = CheckForBetterStack(eligiblePlaces, i, container, bestStack);
+                bestStack = CheckForBetterStack(eligiblePlaces[i].Stacks, container, bestStack);
             }
             return bestStack;
         }
@@ -97,15 +97,15 @@ namespace ContainerVervoer
             Stack bestStack = null;
             for (int i = 0; i < Math.Floor(ship.Width / 2.0); i++)
             {
-                bestStack = CheckForBetterStack(eligiblePlaces, i, container, bestStack);
+                bestStack = CheckForBetterStack(eligiblePlaces[i].Stacks, container, bestStack);
             }
             return bestStack;
         }
 
 
-        private static Stack CheckForBetterStack(Column[] eligiblePlaces, int index, Container container, Stack bestStack)
+        private static Stack CheckForBetterStack(Stack[] stacks, Container container, Stack bestStack)
         {
-            foreach (var stack in eligiblePlaces[index].Stacks) //ToDO merge eligibleplaces and index
+            foreach (var stack in stacks)
             {
                 if (stack.GetTopWeight() + container.Weight > 120000) //TODO Magic Number
                     continue;
