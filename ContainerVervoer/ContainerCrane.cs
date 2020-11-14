@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ContainerVervoer
@@ -103,7 +104,7 @@ namespace ContainerVervoer
         }
 
 
-        private static Stack CheckForBetterStack(Stack[] stacks, Container container, Stack bestStack)
+        private static Stack CheckForBetterStack(ReadOnlyCollection<Stack> stacks, Container container, Stack bestStack)
         {
             foreach (var stack in stacks)
             {
@@ -128,14 +129,14 @@ namespace ContainerVervoer
             if (type == ContainerType.Normal)
                 return ship.Columns.ToArray();
             if (type == ContainerType.Cooled)
-                return ship.Columns.Select(x => new Column(new[] {x.StackCollection.First()})).ToArray();
+                return ship.Columns.Select(x => new Column(new[] {x.Stacks.First()})).ToArray();
             if (type == ContainerType.VaCo)
-                return ship.Columns.Select(x => new Column(new[] {x.StackCollection.First()})).ToArray();
+                return ship.Columns.Select(x => new Column(new[] {x.Stacks.First()})).ToArray();
             if (type == ContainerType.Valuable && ship.Length == 1)
-                return ship.Columns.Select(x => new Column(new[] {x.StackCollection.First()})).ToArray();
+                return ship.Columns.Select(x => new Column(new[] {x.Stacks.First()})).ToArray();
             if (type == ContainerType.Valuable)
                 return ship.Columns.Select(x => new Column(
-                    new[] {x.StackCollection.First(), x.StackCollection.Last()})).ToArray();
+                    new[] {x.Stacks.First(), x.Stacks.Last()})).ToArray();
 
             throw new ArgumentOutOfRangeException(nameof(type), type, "Container type not configured"); //ToDo Throw proper error : container Type not registered
 
