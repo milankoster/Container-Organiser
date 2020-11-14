@@ -8,24 +8,23 @@ namespace ContainerVervoer
     {
         public static void Sort(Ship ship, List<Container> containers)
         {
-            //TODO container type remove 
             List<Container> valuableCooledContainers = GetAllOfType(containers, ContainerType.VaCo);
-            SortContainers(ship, valuableCooledContainers, ContainerType.VaCo);
+            SortContainers(ship, valuableCooledContainers);
             
             List<Container> cooledContainers = GetAllOfType(containers, ContainerType.Cooled);
-            SortContainers(ship, cooledContainers, ContainerType.Cooled); 
+            SortContainers(ship, cooledContainers); 
             
             List<Container> valuableContainers = GetAllOfType(containers, ContainerType.Valuable);
-            SortContainers(ship, valuableContainers, ContainerType.Valuable);
+            SortContainers(ship, valuableContainers);
             
             List<Container> normalContainers = GetAllOfType(containers, ContainerType.Normal);
-            SortContainers(ship, normalContainers, ContainerType.Normal);
+            SortContainers(ship, normalContainers);
             
         }
-
-        private static void SortContainers(Ship ship, List<Container> containers, ContainerType type)
+        
+        private static void SortContainers(Ship ship, List<Container> containers)
         {
-            if (!containers.Any()) return; //ToDo move?
+            if (!containers.Any()) return;
             
             containers = containers.OrderByDescending(c => c.Weight).ToList();
             Column[] eligiblePlaces = GetEligiblePlaces(ship, containers.First().Type);
@@ -34,7 +33,7 @@ namespace ContainerVervoer
                 PlaceContainer(ship, eligiblePlaces, container); 
             }
         }
-
+        
         private static void PlaceContainer(Ship ship, Column[] eligiblePlaces, Container container)
         {
             if (ship.GetLeftSideWeight() >= ship.GetRightSideWeight())
@@ -42,7 +41,7 @@ namespace ContainerVervoer
             else 
                 PlaceLeftToRight(ship, eligiblePlaces, container);
         }
-
+        
         private static void PlaceLeftToRight(Ship ship, Column[] eligiblePlaces, Container container)
         {
             var bestStack = CheckLeftSide(ship, eligiblePlaces, container);
@@ -54,7 +53,7 @@ namespace ContainerVervoer
                 bestStack = CheckRightSide(ship, eligiblePlaces, container);
             
             if (bestStack == null)
-                throw new NotImplementedException(); //TODO Throw proper error
+                throw new NotImplementedException(); //TODO Throw proper error: cannot sort container 
 
             bestStack.Add(container);
         }
@@ -74,14 +73,14 @@ namespace ContainerVervoer
 
             bestStack.Add(container);
         }
-
+        
         private static Stack CheckMiddleStack(Ship ship, Column[] eligiblePlaces, Container container, Stack bestStack)
         {
             int middle = Convert.ToInt32(Math.Floor(ship.Width / 2.0));
             bestStack = CheckForBetterStack(eligiblePlaces, middle, container, bestStack);
             return bestStack;
         }
-
+        
         private static Stack CheckRightSide(Ship ship, Column[] eligiblePlaces, Container container)
         {
             Stack bestStack = null;
@@ -90,7 +89,6 @@ namespace ContainerVervoer
             {
                 bestStack = CheckForBetterStack(eligiblePlaces, i, container, bestStack);
             }
-
             return bestStack;
         }
 
@@ -105,16 +103,16 @@ namespace ContainerVervoer
         }
 
 
-        private static Stack CheckForBetterStack(Column[] eligiblePlaces, int i, Container container, Stack bestStack)
+        private static Stack CheckForBetterStack(Column[] eligiblePlaces, int index, Container container, Stack bestStack)
         {
-            foreach (var stack in eligiblePlaces[i].GetStacks())
+            foreach (var stack in eligiblePlaces[index].Stacks) //ToDO merge eligibleplaces and index
             {
                 if (stack.GetTopWeight() + container.Weight > 120000) //TODO Magic Number
                     continue;
                 if ((container.Type == ContainerType.Valuable || container.Type == ContainerType.VaCo) &&
-                    stack.HasValuable())
+                    stack.ContainsValuableContainer())
                     continue;
-                if (bestStack == null || bestStack.GetSize() > stack.GetSize())
+                if (bestStack == null || bestStack.Size > stack.Size)
                     bestStack = stack;
             }
             return bestStack;
@@ -128,18 +126,19 @@ namespace ContainerVervoer
         private static Column[] GetEligiblePlaces(Ship ship, ContainerType type)
         {
             if (type == ContainerType.Normal)
-                return ship.GetColumns();
+                return ship.Columns;
             if (type == ContainerType.Cooled)
-                return ship.GetColumns().Select(x => new Column(new[] {x.GetStacks().First()})).ToArray();
+                return ship.Columns.Select(x => new Column(new[] {x.Stacks.First()})).ToArray();
             if (type == ContainerType.VaCo)
-                return ship.GetColumns().Select(x => new Column(new[] {x.GetStacks().First()})).ToArray();
+                return ship.Columns.Select(x => new Column(new[] {x.Stacks.First()})).ToArray();
             if (type == ContainerType.Valuable && ship.Length == 1)
-                return ship.GetColumns().Select(x => new Column(new[] {x.GetStacks().First()})).ToArray();
+                return ship.Columns.Select(x => new Column(new[] {x.Stacks.First()})).ToArray();
             if (type == ContainerType.Valuable)
-                return ship.GetColumns().Select(x => new Column(
-                    new[] {x.GetStacks().First(), x.GetStacks().Last()})).ToArray();
+                return ship.Columns.Select(x => new Column(
+                    new[] {x.Stacks.First(), x.Stacks.Last()})).ToArray();
 
-            throw new ArgumentOutOfRangeException(nameof(type), type, "Container type not configured");
+            throw new ArgumentOutOfRangeException(nameof(type), type, "Container type not configured"); //ToDo proper exception
+
         }
     }
 }

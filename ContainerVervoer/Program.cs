@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ContainerVervoer
 {
@@ -19,13 +20,15 @@ namespace ContainerVervoer
          * Check requirements
          * Getters
          * Magic Number Maxtopweight
-         * Private / public getter setter 
+         * Private / public getter setter
+         * Seperate URL generator class?
          */
         
         
         static void Main(string[] args)
         {
-            Ship ship = new Ship(100000, 3, 3);
+
+            /*Ship ship = new Ship(100000, 3, 3);
             List<Container> containers = new List<Container>()
             {
                 new Container(1000, ContainerType.VaCo),
@@ -60,7 +63,7 @@ namespace ContainerVervoer
             ContainerCrane.Sort(ship, containers);
             
             
-            Console.WriteLine(ship);
+            Console.WriteLine(ship);*/
         }
     }
 }

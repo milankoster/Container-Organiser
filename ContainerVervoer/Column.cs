@@ -6,45 +6,36 @@ namespace ContainerVervoer
 {
     public class Column
     {
-        private readonly Stack[] _stacks;
-
+        public readonly Stack[] Stacks; //ToDo Readonly collection? 
+        public int Weight => Stacks.Sum(x => x.Weight);
+        
         public Column(int length)
         {
-            _stacks = new Stack[length];
+            Stacks = new Stack[length];
             PopulateColumns(length);
         }
 
         public Column(Stack[] stacks)
         {
-            _stacks = stacks;
+            Stacks = stacks;
         }
 
-        public int GetWeight() //Todo change to getter property 
-        {
-            return _stacks.Sum(x => x.GetWeight());
-        }
-        
         private void PopulateColumns(int length)
         {
             for (int i = 0; i < length; i++)
             {
-                _stacks[i] = new Stack();
+                Stacks[i] = new Stack();
             }
-        }
-
-        public Stack[] GetStacks()
-        {
-            return _stacks;
         }
 
         public string GetTypesString()
         {
-            return string.Join(',', _stacks.Select(x => x.GetTypesString()));
+            return string.Join(',', Stacks.Select(x => x.GetTypesString()));
         }
         
         public string GetWeightsString()
         {
-            return string.Join(',', _stacks.Select(x => x.GetWeightsString()));
+            return string.Join(',', Stacks.Select(x => x.GetWeightsString()));
         }
     }
 }

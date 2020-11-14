@@ -11,48 +11,39 @@ namespace ContainerVervoer
         public int Width { get; }
         public int Length { get; }
         
-        private readonly Column[] _columns;
+        public readonly Column[] Columns; //TODO Readonly array?
 
-        private string _url = "https://i872272core.venus.fhict.nl/ContainerVisualizer/index.html?";
-        
-        
+        private const string Url = "https://i872272core.venus.fhict.nl/ContainerVisualizer/index.html?"; //TODO Move
+
+
         public Ship(int maxWeight, int width, int length)
         {
             MaxWeight = maxWeight;
             Width = width;
             Length = length;
-            _columns = new Column[width];
+            Columns = new Column[width];
             PopulateShip(width, length);
-            Console.WriteLine(GetTypesString());
-            Console.WriteLine(GetTypesString());
         }
 
         public override string ToString()
         {
-            return $"{_url}length={Length}&width={Width}&stacks={GetTypesString()}&weights={GetWeightsString()}";
-        }
-
-        public Column[] GetColumns()
-        {
-            return _columns;
+            return $"{Url}length={Length}&width={Width}&stacks={GetTypesString()}&weights={GetWeightsString()}";
         }
 
         public bool IsBalanced()
         {
-            if ((double) GetRightSideWeight() / GetLeftSideWeight() > 1.5)
+            if ((double) GetRightSideWeight() / GetLeftSideWeight() > 1.5) //TODO magic number
                 return false;
-            if ((double) GetLeftSideWeight() / GetRightSideWeight() > 1.5)
-                return false;
-            return true;
+            return !((double) GetLeftSideWeight() / GetRightSideWeight() > 1.5);
         }
         
         public int GetLeftSideWeight()
         {
             int weight = 0;
-            int max = Convert.ToInt16(Math.Floor(Width / 2.0));
+            int max = Convert.ToInt32(Math.Floor(Width / 2.0));
             for (int i = 0; i < max; i++)
             {
-                weight += _columns[i].GetWeight();
+                weight += Columns[i].Weight;
             }
             return weight;
         }
@@ -60,10 +51,10 @@ namespace ContainerVervoer
         public int GetRightSideWeight()
         {
             int weight = 0;
-            int min = Convert.ToInt16(Math.Ceiling(Width / 2.0));
+            int min = Convert.ToInt32(Math.Ceiling(Width / 2.0));
             for (int i = min; i < Width; i++)
             {
-                weight += _columns[i].GetWeight();
+                weight += Columns[i].Weight;
             }
             return weight;
         }
@@ -72,18 +63,18 @@ namespace ContainerVervoer
         {
             for (int i = 0; i < width; i++)
             {
-                _columns[i] = new Column(length);
+                Columns[i] = new Column(length);
             }
         }
 
         private string GetTypesString()
         {
-            return string.Join('/',_columns.Select(x => x.GetTypesString()));
+            return string.Join('/',Columns.Select(x => x.GetTypesString()));
         }
         
         private string GetWeightsString()
         {
-            return string.Join('/',_columns.Select(x => x.GetWeightsString()));
+            return string.Join('/',Columns.Select(x => x.GetWeightsString()));
         }
     }
 }
