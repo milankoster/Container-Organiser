@@ -4,12 +4,9 @@ namespace ContainerVervoer.Exceptions
 {
     public class NoValidLocationException : Exception
     {
-        public string ErrorMessage { get; }
-
-        public NoValidLocationException()
+        public NoValidLocationException() : base("Unable to place all containers on the ship")
         {
-            ErrorMessage = "Error: Unable to place all locations on the ship";
+            
         }
-
     }
 }

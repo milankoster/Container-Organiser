@@ -67,7 +67,7 @@ namespace ContainerVervoer
             }
             catch(NoValidLocationException e)
             {
-                Console.WriteLine(e.ErrorMessage);                
+                Console.WriteLine($"Error: {e.Message}");                
             }
 
             
