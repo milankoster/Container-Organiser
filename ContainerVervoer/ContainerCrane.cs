@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using ContainerVervoer.Exceptions;
 
 namespace ContainerVervoer
 {
@@ -20,7 +21,6 @@ namespace ContainerVervoer
             
             List<Container> normalContainers = GetAllOfType(containers, ContainerType.Normal);
             SortContainers(ship, normalContainers);
-            
         }
         
         private static void SortContainers(Ship ship, List<Container> containers)
@@ -54,7 +54,7 @@ namespace ContainerVervoer
                 bestStack = CheckRightSide(ship, eligiblePlaces, container);
             
             if (bestStack == null)
-                throw new NotImplementedException(); //ToDo Throw proper error: cannot sort container 
+                throw new NoValidLocationException(); 
 
             bestStack.Add(container);
         }
@@ -70,7 +70,7 @@ namespace ContainerVervoer
                 bestStack = CheckLeftSide(ship, eligiblePlaces, container);
             
             if (bestStack == null)
-                throw new NotImplementedException(); //TODO Throw proper error
+                throw new NoValidLocationException(); 
 
             bestStack.Add(container);
         }
@@ -108,7 +108,7 @@ namespace ContainerVervoer
         {
             foreach (var stack in stacks)
             {
-                if (stack.GetTopWeight() + container.Weight > 120000) //TODO Magic Number
+                if (stack.GetTopWeight() + container.Weight > 3000) //TODO Magic Number
                     continue;
                 if ((container.Type == ContainerType.Valuable || container.Type == ContainerType.VaCo) &&
                     stack.ContainsValuableContainer())
@@ -138,7 +138,7 @@ namespace ContainerVervoer
                 return ship.Columns.Select(x => new Column(
                     new[] {x.Stacks.First(), x.Stacks.Last()})).ToArray();
 
-            throw new ArgumentOutOfRangeException(nameof(type), type, "Container type not configured"); //ToDo Throw proper error : container Type not registered
+            throw new ArgumentOutOfRangeException(nameof(type), type, "Container type not configured");
 
         }
     }

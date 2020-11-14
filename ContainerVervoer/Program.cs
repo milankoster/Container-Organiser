@@ -1,26 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using ContainerVervoer.Exceptions;
 
 namespace ContainerVervoer
 {
     static class Program
     {
         /*To Do List
-         * Read Only Collections
-         * 
          * Begin checks
          *     - Size
-         *     - Height
+         *     - Weight
          * 
          * Min / Max weight containers
          * Min / Max weight ship
          *
          * Magic Numbers 
          * 
-         * Throw Proper Exceptions 
-         * 
          * Unit Testing
-         * 
-         * Check requirements
          * 
          * Check Private / public getter setter
          */
@@ -55,13 +51,26 @@ namespace ContainerVervoer
                 new Container(1500, ContainerType.Normal),
                 new Container(1500, ContainerType.Normal),
                 new Container(1500, ContainerType.Normal),
-
-                
-
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
+                new Container(1500, ContainerType.Normal),
             };
-            ContainerCrane.Sort(ship, containers);
 
-            ShipVisualiser.OpenInChrome(ship);
+            
+            
+            try
+            {
+                ContainerCrane.Sort(ship, containers);
+                ShipVisualiser.OpenInChrome(ship);
+            }
+            catch(NoValidLocationException e)
+            {
+                Console.WriteLine(e.ErrorMessage);                
+            }
+
+            
             
             
         }
