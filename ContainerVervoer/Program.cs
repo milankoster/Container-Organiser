@@ -7,24 +7,19 @@ namespace ContainerVervoer
     static class Program
     {
         /*To Do List
-         * Begin checks
-         *     - Size
-         *     - Weight
+         * Exceptions with variables
          * 
          * Min / Max weight containers
-         * Min / Max weight ship
-         *
+         * 
          * Magic Numbers 
          * 
          * Unit Testing
-         * 
-         * Check Private / public getter setter
          */
         
         
         static void Main(string[] args)
         {
-            Ship ship = new Ship(100000, 3, 3);
+            Ship ship = new Ship(50000, 3, 3);
             List<Container> containers = new List<Container>()
             {
                 new Container(1000, ContainerType.VaCo),
@@ -47,25 +42,19 @@ namespace ContainerVervoer
                 new Container(1500, ContainerType.Normal),
                 new Container(1500, ContainerType.Normal),
                 new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
+
+
             };
 
             
             
             try
             {
+                PreSortingChecker.ExecuteChecks(ship,containers);
                 ContainerCrane.Sort(ship, containers);
                 ShipVisualiser.OpenInChrome(ship);
             }
-            catch(NoValidLocationException e)
+            catch(Exception e)
             {
                 Console.WriteLine($"Error: {e.Message}");                
             }

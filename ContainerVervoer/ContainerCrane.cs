@@ -124,7 +124,7 @@ namespace ContainerVervoer
             return containers.Where(x => x.Type == type).ToList();
         }
 
-        private static Column[] GetEligiblePlaces(Ship ship, ContainerType type)
+        public static Column[] GetEligiblePlaces(Ship ship, ContainerType type)
         {
             if (type == ContainerType.Normal)
                 return ship.Columns.ToArray();
