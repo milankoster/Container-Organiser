@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Configuration;
 using ContainerVervoer.Exceptions;
 
 namespace ContainerVervoer
@@ -7,47 +9,40 @@ namespace ContainerVervoer
     static class Program
     {
         /*To Do List
-         * Exceptions with variables
-         * 
-         * Min / Max weight containers
-         * 
-         * Magic Numbers 
-         * 
          * Unit Testing
-         */
+         *
+         * comments toevoegen aan een aantal lastige functies -> triple slash
+        */
         
+       
         
         static void Main(string[] args)
         {
-            Ship ship = new Ship(50000, 3, 3);
+            Ship ship = new Ship(200000, 3, 3);
             List<Container> containers = new List<Container>()
             {
-                new Container(1000, ContainerType.VaCo),
-                new Container(1500, ContainerType.VaCo),
-                new Container(2000, ContainerType.VaCo),
-                new Container(1500, ContainerType.Cooled),
-                new Container(1500, ContainerType.Cooled),
-                new Container(1500, ContainerType.Cooled),
-                new Container(1500, ContainerType.Cooled),
-                new Container(1500, ContainerType.Cooled),
-                new Container(1500, ContainerType.Valuable),
-                new Container(1500, ContainerType.Valuable),
-                new Container(1500, ContainerType.Valuable),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-                new Container(1500, ContainerType.Normal),
-
-
+                new Container(5000, ContainerType.VaCo),
+                new Container(5500, ContainerType.VaCo),
+                new Container(6000, ContainerType.VaCo),
+                new Container(6500, ContainerType.Cooled),
+                new Container(6500, ContainerType.Cooled),
+                new Container(6500, ContainerType.Cooled),
+                new Container(6500, ContainerType.Cooled),
+                new Container(6500, ContainerType.Cooled),
+                new Container(6500, ContainerType.Valuable),
+                new Container(6500, ContainerType.Valuable), 
+                new Container(6500, ContainerType.Valuable),
+                new Container(6500, ContainerType.Normal),
+                new Container(6500, ContainerType.Normal),
+                new Container(6500, ContainerType.Normal),
+                new Container(6500, ContainerType.Normal),
+                new Container(6500, ContainerType.Normal),
+                new Container(6500, ContainerType.Normal),
+                new Container(6500, ContainerType.Normal),
+                new Container(6500, ContainerType.Normal),
+                new Container(6500, ContainerType.Normal),
             };
 
-            
-            
             try
             {
                 PreSortingChecker.ExecuteChecks(ship,containers);
@@ -60,8 +55,7 @@ namespace ContainerVervoer
             }
 
             
-            
-            
+
         }
     }
 }

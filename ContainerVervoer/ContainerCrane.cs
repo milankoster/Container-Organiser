@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.Linq;
 using ContainerVervoer.Exceptions;
 
@@ -8,21 +10,26 @@ namespace ContainerVervoer
 {
     public static class ContainerCrane
     {
-        public static void Sort(Ship ship, List<Container> containers) 
+        private static int _maxTopWeight;
+        public static void Sort(Ship ship, List<Container> containers)
         {
-            List<Container> valuableCooledContainers = GetAllOfType(containers, ContainerType.VaCo);
-            SortContainers(ship, valuableCooledContainers);
+            var containerSection = ConfigurationManager.GetSection("container") as NameValueCollection;
+            _maxTopWeight = Convert.ToInt32(containerSection?["MaxTopWeight"]);
+
+            SortType(ship, containers, ContainerType.VaCo);
+            SortType(ship, containers, ContainerType.Cooled);
+            SortType(ship, containers, ContainerType.Valuable);
+            SortType(ship, containers, ContainerType.Normal);
             
-            List<Container> cooledContainers = GetAllOfType(containers, ContainerType.Cooled);
-            SortContainers(ship, cooledContainers); 
-            
-            List<Container> valuableContainers = GetAllOfType(containers, ContainerType.Valuable);
-            SortContainers(ship, valuableContainers);
-            
-            List<Container> normalContainers = GetAllOfType(containers, ContainerType.Normal);
-            SortContainers(ship, normalContainers);
+            PostSortingCheck(ship);
         }
-        
+
+        private static void SortType(Ship ship, List<Container> containers, ContainerType type)
+        {
+            List<Container> containersOfType = GetAllOfType(containers, type);
+            SortContainers(ship, containersOfType);
+        }
+
         private static void SortContainers(Ship ship, List<Container> containers)
         {
             if (!containers.Any()) return;
@@ -108,7 +115,7 @@ namespace ContainerVervoer
         {
             foreach (var stack in stacks)
             {
-                if (stack.GetTopWeight() + container.Weight > 3000) //TODO Magic Number
+                if (stack.GetTopWeight() + container.Weight > _maxTopWeight)
                     continue;
                 if ((container.Type == ContainerType.Valuable || container.Type == ContainerType.VaCo) &&
                     stack.ContainsValuableContainer())
@@ -139,7 +146,14 @@ namespace ContainerVervoer
                     new[] {x.Stacks.First(), x.Stacks.Last()})).ToArray();
 
             throw new ArgumentOutOfRangeException(nameof(type), type, "Container type not configured");
+        }
 
+        private static void PostSortingCheck(Ship ship)
+        {
+            if (!ship.IsBalanced())
+            {
+                throw new ImbalanceException("Not able to balance ship.");
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 
 namespace ContainerVervoer
@@ -10,7 +11,8 @@ namespace ContainerVervoer
         public int MinWeight => MaxWeight / 2;
         public int Width { get; }
         public int Length { get; }
-        
+
+        private readonly double _balanceNumber;
         private readonly Column[] _columns;
         public readonly ReadOnlyCollection<Column> Columns;
 
@@ -19,9 +21,15 @@ namespace ContainerVervoer
             MaxWeight = maxWeight;
             Width = width;
             Length = length;
+            
+            
             _columns = new Column[width];
-            PopulateShip(width, length);
             Columns = new ReadOnlyCollection<Column>(_columns);
+            PopulateShip(width, length);
+
+            _balanceNumber = 1.5;
+            
+            //Convert.ToDouble(ConfigurationManager.AppSettings["WeightBalance"])
         }
 
         public override string ToString()
@@ -31,9 +39,9 @@ namespace ContainerVervoer
 
         public bool IsBalanced()
         {
-            if ((double) GetRightSideWeight() / GetLeftSideWeight() > 1.5) //TODO magic number
+            if ((double) GetRightSideWeight() / GetLeftSideWeight() > _balanceNumber)
                 return false;
-            return !((double) GetLeftSideWeight() / GetRightSideWeight() > 1.5);
+            return !((double) GetLeftSideWeight() / GetRightSideWeight() > _balanceNumber);
         }
         
         public int GetLeftSideWeight()

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.Linq;
 using ContainerVervoer.Exceptions;
 
@@ -13,8 +16,29 @@ namespace ContainerVervoer
             CheckMinWeight(ship,weight);
             CheckSpace(ship,containers);
             CheckVaCoSpaces(ship,containers);
+            ValidateContainers(containers);
         }
 
+        private static void ValidateContainers(List<Container> containers)
+        {
+            var containerSection = ConfigurationManager.GetSection("container") as NameValueCollection;
+            var baseWeight = Convert.ToInt32(containerSection?["BaseWeight"]);
+            var maxWeight = Convert.ToInt32(containerSection?["MaxWeight"]);
+            
+            foreach (Container container in containers)
+            {
+                ValidateContainer(container.Weight, baseWeight, maxWeight);
+            }
+        }
+        
+        private static void ValidateContainer(int weight, int baseWeight, int maxWeight)
+        {
+            if (weight < baseWeight)
+                throw new InvalidContainerException($"Container is too light. Weight: {weight}. Base Weight {baseWeight}");
+            if (weight > maxWeight)
+                throw new InvalidContainerException($"Container is too heavy. Weight: {weight}. Base Weight {baseWeight}");
+        }
+        
         private static void CheckMaxWeight(Ship ship, int weight)
         {
             if (weight > ship.MaxWeight)
