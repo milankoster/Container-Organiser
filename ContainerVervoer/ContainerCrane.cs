@@ -24,12 +24,18 @@ namespace ContainerVervoer
             PostSortingCheck(ship);
         }
 
+        /// <summary>
+        /// Sorts one ContainerType from a list of containers
+        /// </summary>
         private static void SortType(Ship ship, List<Container> containers, ContainerType type)
         {
             List<Container> containersOfType = GetAllOfType(containers, type);
             SortContainers(ship, containersOfType);
         }
 
+        /// <summary>
+        /// Sorts containers from heaviest to lightest then places them on the ship
+        /// </summary>
         private static void SortContainers(Ship ship, List<Container> containers)
         {
             if (!containers.Any()) return;
@@ -50,6 +56,9 @@ namespace ContainerVervoer
                 PlaceLeftToRight(ship, eligiblePlaces, container);
         }
         
+        /// <summary>
+        /// Finds the best stack to put a container in starting from left to the right
+        /// </summary>
         private static void PlaceLeftToRight(Ship ship, Column[] eligiblePlaces, Container container)
         {
             var bestStack = CheckLeftSide(ship, eligiblePlaces, container);
@@ -66,6 +75,9 @@ namespace ContainerVervoer
             bestStack.Add(container);
         }
         
+        /// <summary>
+        /// Finds the best stack to put a container in starting from right to the left
+        /// </summary>
         private static void PlaceRightToLeft(Ship ship, Column[] eligiblePlaces, Container container)
         {
             Stack bestStack = CheckRightSide(ship, eligiblePlaces, container);
@@ -111,6 +123,10 @@ namespace ContainerVervoer
         }
 
 
+        /// <summary>
+        /// Checks given stacks for a stack better than the bestStack
+        /// </summary>
+        /// <returns> Best stack found among the list of stacks </returns>
         private static Stack CheckForBetterStack(ReadOnlyCollection<Stack> stacks, Container container, Stack bestStack)
         {
             foreach (var stack in stacks)
@@ -131,6 +147,10 @@ namespace ContainerVervoer
             return containers.Where(x => x.Type == type).ToList();
         }
 
+        /// <summary>
+        /// Checks the ship for possible stacks to place a container based on its ContainerType
+        /// </summary>
+        /// <returns> An array of Columns which only contain eligible stacks for the given ContainerType </returns>
         public static Column[] GetEligiblePlaces(Ship ship, ContainerType type)
         {
             if (type == ContainerType.Normal)
@@ -148,6 +168,10 @@ namespace ContainerVervoer
             throw new ArgumentOutOfRangeException(nameof(type), type, "Container type not configured");
         }
 
+        /// <summary>
+        /// Checks if the ship is balanced
+        /// </summary>
+        /// <exception cref="ImbalanceException"> Throws when the ship is imbalanced </exception>
         private static void PostSortingCheck(Ship ship)
         {
             if (!ship.IsBalanced())

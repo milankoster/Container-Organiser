@@ -10,13 +10,9 @@ namespace ContainerVervoer
     {
         /*To Do List
          * Unit Testing
-         *
-         * comments toevoegen aan een aantal lastige functies -> triple slash
         */
         
-       
-        
-        static void Main(string[] args)
+       static void Main(string[] args)
         {
             Ship ship = new Ship(200000, 3, 3);
             List<Container> containers = new List<Container>()

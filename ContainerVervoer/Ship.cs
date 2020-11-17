@@ -27,16 +27,22 @@ namespace ContainerVervoer
             Columns = new ReadOnlyCollection<Column>(_columns);
             PopulateShip(width, length);
 
-            _balanceNumber = 1.5;
-            
-            //Convert.ToDouble(ConfigurationManager.AppSettings["WeightBalance"])
+            _balanceNumber = Convert.ToDouble(ConfigurationManager.AppSettings["WeightBalance"]);
         }
 
+        /// <summary>
+        /// Converts the layout of the ship to a string
+        /// </summary>
+        /// <returns> String that can be used for visualisation </returns>
         public override string ToString()
         {
             return $"length={Length}&width={Width}&stacks={GetTypesString()}&weights={GetWeightsString()}";
         }
 
+        /// <summary>
+        /// Checks whether the ship is within a certain balance 
+        /// </summary>
+        /// <returns> A boolean that shows whether the ship is balanced </returns>
         public bool IsBalanced()
         {
             if ((double) GetRightSideWeight() / GetLeftSideWeight() > _balanceNumber)

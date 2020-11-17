@@ -19,6 +19,9 @@ namespace ContainerVervoer
             ValidateContainers(containers);
         }
 
+        /// <summary>
+        /// Checks if the containers are within this weight limits 
+        /// </summary>
         private static void ValidateContainers(List<Container> containers)
         {
             var containerSection = ConfigurationManager.GetSection("container") as NameValueCollection;
@@ -36,9 +39,12 @@ namespace ContainerVervoer
             if (weight < baseWeight)
                 throw new InvalidContainerException($"Container is too light. Weight: {weight}. Base Weight {baseWeight}");
             if (weight > maxWeight)
-                throw new InvalidContainerException($"Container is too heavy. Weight: {weight}. Base Weight {baseWeight}");
+                throw new InvalidContainerException($"Container is too heavy. Weight: {weight}. Base Weight {maxWeight}");
         }
         
+        /// <summary>
+        /// Checks if the containers weigh too much for the ship
+        /// </summary>
         private static void CheckMaxWeight(Ship ship, int weight)
         {
             if (weight > ship.MaxWeight)
@@ -57,6 +63,9 @@ namespace ContainerVervoer
             }
         }
 
+        /// <summary>
+        /// Check if the ship has enough space to hold all valuable containers
+        /// </summary>
         private static void CheckSpace(Ship ship, List<Container> containers)
         {
             int valuableSpaces = ContainerCrane.GetEligiblePlaces(ship, ContainerType.Valuable).Sum(c => c.Stacks.Count);
