@@ -11,10 +11,9 @@ namespace ContainerVervoer
     public static class ContainerCrane
     {
         private static int _maxTopWeight;
-        public static void Sort(Ship ship, List<Container> containers)
+        public static void Sort(Ship ship, List<Container> containers, IConfiguration configuration)
         {
-            var containerSection = ConfigurationManager.GetSection("container") as NameValueCollection;
-            _maxTopWeight = Convert.ToInt32(containerSection?["MaxTopWeight"]);
+            _maxTopWeight = configuration.ContainerTopWeight;
 
             SortType(ship, containers, ContainerType.VaCo);
             SortType(ship, containers, ContainerType.Cooled);

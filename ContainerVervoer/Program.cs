@@ -8,13 +8,11 @@ namespace ContainerVervoer
 {
     static class Program
     {
-        /*To Do List
-         * Unit Testing
-        */
-        
-       static void Main(string[] args)
+        static void Main(string[] args)
         {
-            Ship ship = new Ship(200000, 3, 3);
+            Config config = new Config();
+            
+            Ship ship = new Ship(200000, 3, 3, config);
             List<Container> containers = new List<Container>()
             {
                 new Container(5000, ContainerType.VaCo),
@@ -36,22 +34,21 @@ namespace ContainerVervoer
                 new Container(6500, ContainerType.Normal),
                 new Container(6500, ContainerType.Normal),
                 new Container(6500, ContainerType.Normal),
-                new Container(6500, ContainerType.Normal),
             };
 
+            
+            
             try
             {
-                PreSortingChecker.ExecuteChecks(ship,containers);
-                ContainerCrane.Sort(ship, containers);
+                PreSortingChecker.ExecuteChecks(ship,containers, config);
+                ContainerCrane.Sort(ship, containers, config);
                 ShipVisualiser.OpenInChrome(ship);
             }
+            
             catch(Exception e)
             {
                 Console.WriteLine($"Error: {e.Message}");                
             }
-
-            
-
         }
     }
 }

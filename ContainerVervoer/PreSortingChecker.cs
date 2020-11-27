@@ -9,24 +9,23 @@ namespace ContainerVervoer
 {
     public static class PreSortingChecker
     {
-        public static void ExecuteChecks(Ship ship, List<Container> containers)
+        public static void ExecuteChecks(Ship ship, List<Container> containers, IConfiguration configuration)
         {
             int weight = containers.Sum(c => c.Weight);
             CheckMaxWeight(ship,weight);
             CheckMinWeight(ship,weight);
             CheckSpace(ship,containers);
             CheckVaCoSpaces(ship,containers);
-            ValidateContainers(containers);
+            ValidateContainers(containers, configuration);
         }
 
         /// <summary>
         /// Checks if the containers are within this weight limits 
         /// </summary>
-        private static void ValidateContainers(List<Container> containers)
+        private static void ValidateContainers(List<Container> containers, IConfiguration configuration)
         {
-            var containerSection = ConfigurationManager.GetSection("container") as NameValueCollection;
-            var baseWeight = Convert.ToInt32(containerSection?["BaseWeight"]);
-            var maxWeight = Convert.ToInt32(containerSection?["MaxWeight"]);
+            var baseWeight = configuration.ContainerBaseWeight;
+            var maxWeight = configuration.ContainerMaxWeight;
             
             foreach (Container container in containers)
             {
@@ -39,7 +38,7 @@ namespace ContainerVervoer
             if (weight < baseWeight)
                 throw new InvalidContainerException($"Container is too light. Weight: {weight}. Base Weight {baseWeight}");
             if (weight > maxWeight)
-                throw new InvalidContainerException($"Container is too heavy. Weight: {weight}. Base Weight {maxWeight}");
+                throw new InvalidContainerException($"Container is too heavy. Weight: {weight}. Max Weight {maxWeight}");
         }
         
         /// <summary>

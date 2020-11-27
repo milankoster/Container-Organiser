@@ -16,7 +16,7 @@ namespace ContainerVervoer
         private readonly Column[] _columns;
         public readonly ReadOnlyCollection<Column> Columns;
 
-        public Ship(int maxWeight, int width, int length)
+        public Ship(int maxWeight, int width, int length, IConfiguration configuration)
         {
             MaxWeight = maxWeight;
             Width = width;
@@ -27,7 +27,7 @@ namespace ContainerVervoer
             Columns = new ReadOnlyCollection<Column>(_columns);
             PopulateShip(width, length);
 
-            _balanceNumber = Convert.ToDouble(ConfigurationManager.AppSettings["WeightBalance"]);
+            _balanceNumber = configuration.ShipBalance;
         }
 
         /// <summary>
