@@ -15,7 +15,7 @@ namespace ContainerVervoer
             Ship ship = new Ship(200000, 3, 3, config);
             List<Container> containers = new List<Container>()
             {
-                new Container(5000, ContainerType.VaCo),
+                new Container(30000, ContainerType.VaCo),
                 new Container(5500, ContainerType.VaCo),
                 new Container(6000, ContainerType.VaCo),
                 new Container(6500, ContainerType.Cooled),
@@ -26,7 +26,6 @@ namespace ContainerVervoer
                 new Container(6500, ContainerType.Valuable),
                 new Container(6500, ContainerType.Valuable), 
                 new Container(6500, ContainerType.Valuable),
-                new Container(6500, ContainerType.Normal),
                 new Container(6500, ContainerType.Normal),
                 new Container(6500, ContainerType.Normal),
                 new Container(6500, ContainerType.Normal),

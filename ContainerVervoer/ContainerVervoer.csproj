@@ -6,15 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Update="Stack.cs">
-        <DependentUpon>Column.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Column.cs">
-        <DependentUpon>Ship.cs</DependentUpon>
-      </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     </ItemGroup>
 
